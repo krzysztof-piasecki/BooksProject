@@ -4,21 +4,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import static org.junit.Assert.*;
-
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import pl.krzysztof.piasecki.homework.BaseTests;
-import pl.krzysztof.piasecki.homework.model.BookModel;
 import pl.krzysztof.piasecki.homework.model.Book;
+import pl.krzysztof.piasecki.homework.serializator.BookSerializeObject;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class BookModelDaoTests extends BaseTests {
-    List<BookModel> bookList = new ArrayList<>();
-    @Test
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+@SpringBootTest
+public class BookDaoTests extends BaseTests {
+
+    List<Book> bookList = new ArrayList<>();
+    @Before
     public void getBooks() {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -35,21 +40,16 @@ public class BookModelDaoTests extends BaseTests {
 
             Iterator<JSONObject> iterator = books.iterator();
             while (iterator.hasNext()) {
-                BookModel bookModel = objectMapper.readValue(iterator.next().toString(), Book.class);
-                bookList.add(bookModel);
+                Book book = objectMapper.readValue(iterator.next().toString(), BookSerializeObject.class);
+                bookList.add(book);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-//    @Test
-//    public void checkBookData(){
-//        assertEquals(1,bookList.size());
-//        BookModel bookModel = bookList.get(0);
-//        assertNotNull(bookModel);
-//        assertEquals("", bookModel.getIsbn());
-//
-//
-//    }
 
+    @Test
+    public void checkBookData(){
+        assertEquals(40,bookList.size());
+    }
 }
