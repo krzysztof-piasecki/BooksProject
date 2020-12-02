@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import pl.krzysztof.piasecki.homework.cache.BookCacheImpl;
 import pl.krzysztof.piasecki.homework.reader.impl.APIJsonReader;
 import pl.krzysztof.piasecki.homework.reader.impl.JsonFileReader;
 import pl.krzysztof.piasecki.homework.reader.JsonReader;
@@ -19,6 +20,7 @@ public class HomeworkApplication {
     public static void main(String[] args) throws ParseException {
         SpringApplication.run(HomeworkApplication.class, args);
         ParamInitializer.getInstance().putParams(args);
+        BookCacheImpl.getInstance();
 
     }
     @Bean

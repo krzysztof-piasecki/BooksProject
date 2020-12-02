@@ -2,6 +2,7 @@ package pl.krzysztof.piasecki.homework.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.krzysztof.piasecki.homework.cache.BookCacheImpl;
 import pl.krzysztof.piasecki.homework.dao.BookDao;
 import pl.krzysztof.piasecki.homework.model.AuthorRating;
 import pl.krzysztof.piasecki.homework.model.Book;
@@ -15,9 +16,16 @@ public class BookService {
     private BookDao bookDao;
 
     public Book getBookByIsbn (String id){
-        List<Book> bookList = bookDao.getAllBooks();
-        Optional<Book> book = bookList.stream().filter(e -> id.equals(e.getIsbn())).findFirst();
-        return book.isPresent() ? book.get() : null;
+        Book book = BookCacheImpl.get(id);
+        if (book != null){
+            BookCacheImpl.put(book);
+            return book;
+        }else{
+            List<Book> bookList = bookDao.getAllBooks();
+            Optional<Book> optionalBook = bookList.stream().filter(e -> id.equals(e.getIsbn())).findFirst();
+            optionalBook.ifPresent(b -> BookCacheImpl.put(b));
+            return optionalBook.isPresent() ? optionalBook.get() : null;
+        }
     }
 
     public List<Book> getBookByCategory (String category){
@@ -54,4 +62,25 @@ public class BookService {
         }
         return ratingSum == null ? null : ratingSum / ratings.size();
     }
+
+    public Book getBookByPageNumber (int pageNumber){
+        List<Book> bookList = bookDao.getAllBooks();
+        Optional<Book> book = bookList.stream().filter(e -> e.getPageCount() > pageNumber).findFirst();
+        return book.isPresent() ? book.get() : null;
+    }
+
+    public List<Book> getBooksByReadingSkills (int numberOfPagesPerHour, int averageNumberOfHoursPerDay){
+        List<Book> bookList = bookDao.getAllBooks();
+        int averagePagesPerMonth = numberOfPagesPerHour * averageNumberOfHoursPerDay * 30;
+        bookList.sort(Comparator.comparing(Book::getAverageRating));
+        List <Book> booksByReadingSkillsWithHigestRatings = new ArrayList<>();
+        int numberOfPages = 0;
+        for (Book book: bookList){
+            if(book.getPageCount() < averagePagesPerMonth - numberOfPages){
+                booksByReadingSkillsWithHigestRatings.add(book);
+            }
+        }
+        return booksByReadingSkillsWithHigestRatings;
+    }
+
 }

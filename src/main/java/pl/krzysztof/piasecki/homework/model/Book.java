@@ -25,6 +25,8 @@ public class Book {
     private Double averageRating;
     private List<String> authors = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
+    @JsonIgnore
+    private Long addedTime;
 
     public static final class Builder {
         private String isbn;
@@ -244,4 +246,7 @@ public class Book {
         this.categories = categories;
     }
 
+    public Long getAddedTime() {return addedTime;}
+
+    public void setAddedTime(long addedTime) {this.addedTime = addedTime;}
 }
