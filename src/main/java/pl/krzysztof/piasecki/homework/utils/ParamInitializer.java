@@ -6,8 +6,6 @@ import java.util.Map;
 
 public class ParamInitializer {
 
-    private ParamInitializer(){};
-
     private static ParamInitializer paramInitializer = null;
     private Map<String, String> params = new HashMap<>();
 

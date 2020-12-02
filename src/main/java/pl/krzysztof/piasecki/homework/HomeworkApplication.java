@@ -17,7 +17,7 @@ public class HomeworkApplication {
     @Value("${default.json.path}")
     private String defaultPath;
     public static final String DATASOURCE = "datasource";
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         SpringApplication.run(HomeworkApplication.class, args);
         ParamInitializer.getInstance().putParams(args);
         BookCacheImpl.getInstance();

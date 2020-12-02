@@ -24,7 +24,7 @@ public class JsonFileReader implements JsonReader {
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        JSONObject jsonObject = (JSONObject) obj;
-        return jsonObject;
+        return (JSONObject) obj;
+
     }
 }

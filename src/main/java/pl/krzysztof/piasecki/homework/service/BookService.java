@@ -9,29 +9,29 @@ import pl.krzysztof.piasecki.homework.model.Book;
 
 import java.util.*;
 import java.util.stream.Collectors;
+
 @Service
 public class BookService {
 
     @Autowired
     private BookDao bookDao;
 
-    public Book getBookByIsbn (String id){
+    public Book getBookByIsbn(String id) {
         Book book = BookCacheImpl.get(id);
-        if (book != null){
+        if (book != null) {
             BookCacheImpl.put(book);
             return book;
-        }else{
+        } else {
             List<Book> bookList = bookDao.getAllBooks();
             Optional<Book> optionalBook = bookList.stream().filter(e -> id.equals(e.getIsbn())).findFirst();
-            optionalBook.ifPresent(b -> BookCacheImpl.put(b));
-            return optionalBook.isPresent() ? optionalBook.get() : null;
+            optionalBook.ifPresent(BookCacheImpl::put);
+            return optionalBook.orElse(null);
         }
     }
 
-    public List<Book> getBookByCategory (String category){
+    public List<Book> getBookByCategory(String category) {
         List<Book> bookList = bookDao.getAllBooks();
-        List<Book> booksByCategory = bookList.stream().filter(e -> e.getCategories().contains(category)).collect(Collectors.toList());
-        return booksByCategory;
+        return bookList.stream().filter(e -> e.getCategories().contains(category)).collect(Collectors.toList());
     }
 
     public List<AuthorRating> getAuthorsAverageRatings() {
@@ -63,21 +63,31 @@ public class BookService {
         return ratingSum == null ? null : ratingSum / ratings.size();
     }
 
-    public Book getBookByPageNumber (int pageNumber){
+    public Book getBookByPageNumber(int pageNumber) {
         List<Book> bookList = bookDao.getAllBooks();
         Optional<Book> book = bookList.stream().filter(e -> e.getPageCount() > pageNumber).findFirst();
-        return book.isPresent() ? book.get() : null;
+        return book.orElse(null);
     }
 
-    public List<Book> getBooksByReadingSkills (int numberOfPagesPerHour, int averageNumberOfHoursPerDay){
+    public List<Book> getBooksByReadingSkills(int numberOfPagesPerHour, int averageNumberOfHoursPerDay) {
         List<Book> bookList = bookDao.getAllBooks();
+        List<Book> booksByReadingSkillsWithHighestRatings = new ArrayList<>();
         int averagePagesPerMonth = numberOfPagesPerHour * averageNumberOfHoursPerDay * 30;
-        bookList.sort(Comparator.comparing(Book::getAverageRating));
-        List <Book> booksByReadingSkillsWithHighestRatings = new ArrayList<>();
+
+        bookList = bookList.stream().filter(e -> e.getAverageRating() != null).collect(Collectors.toList());
+        bookList.sort(Comparator.comparing(Book::getAverageRating).reversed());
+
+        int minPages = bookList.get(bookList.size() - 1).getPageCount();
         int numberOfPages = 0;
-        for (Book book: bookList){
-            if(book.getPageCount() < averagePagesPerMonth - numberOfPages){
-                booksByReadingSkillsWithHighestRatings.add(book);
+
+        for (Book book : bookList) {
+            if (averagePagesPerMonth - numberOfPages < minPages) {
+                break;
+            } else {
+                if (book.getPageCount() < averagePagesPerMonth - numberOfPages) {
+                    booksByReadingSkillsWithHighestRatings.add(book);
+                    numberOfPages += book.getPageCount();
+                }
             }
         }
         return booksByReadingSkillsWithHighestRatings;

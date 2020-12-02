@@ -5,6 +5,7 @@ import pl.krzysztof.piasecki.homework.model.Book;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
 
 public class BookCacheImpl {
@@ -17,7 +18,7 @@ public class BookCacheImpl {
         return lruBookCache;
     }
 
-    public static ConcurrentHashMap<String, Book> cacheMap = new ConcurrentHashMap<>();
+    static ConcurrentMap<String, Book> cacheMap = new ConcurrentHashMap<>();
     public static synchronized void put(Book book) {
         Calendar cal = Calendar.getInstance();
         if(cacheMap.size() > 4) {
