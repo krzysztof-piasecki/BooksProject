@@ -73,14 +73,14 @@ public class BookService {
         List<Book> bookList = bookDao.getAllBooks();
         int averagePagesPerMonth = numberOfPagesPerHour * averageNumberOfHoursPerDay * 30;
         bookList.sort(Comparator.comparing(Book::getAverageRating));
-        List <Book> booksByReadingSkillsWithHigestRatings = new ArrayList<>();
+        List <Book> booksByReadingSkillsWithHighestRatings = new ArrayList<>();
         int numberOfPages = 0;
         for (Book book: bookList){
             if(book.getPageCount() < averagePagesPerMonth - numberOfPages){
-                booksByReadingSkillsWithHigestRatings.add(book);
+                booksByReadingSkillsWithHighestRatings.add(book);
             }
         }
-        return booksByReadingSkillsWithHigestRatings;
+        return booksByReadingSkillsWithHighestRatings;
     }
 
 }
