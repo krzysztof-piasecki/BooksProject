@@ -17,10 +17,8 @@ public class BookDeserializer extends StdDeserializer<Book> {
 
     private static final long serialVersionUID = 7923585097068641765L;
     private static final String IMAGELINKS = "imageLinks";
-    private static final String IDENTIFIER = "imageLinks";
-    private static final String VOLUMEINFO = "imageLinks";
-    private static final String YEARFORMAT = "yyyy";
-    private static final String DATEFORMAT = "yyyy-MM-dd";
+    private static final String IDENTIFIER = "identifier";
+    private static final String VOLUMEINFO = "volumeInfo";
     private static final String INDUSTRYIDENTIFIERS = "industryIdentifiers";
     private static final String PUBLISHEDDATE = "publishedDate";
     private static final String THUMBNAIL = "thumbnail";
@@ -61,7 +59,7 @@ public class BookDeserializer extends StdDeserializer<Book> {
     private Long parseDateToLong(JsonNode node) {
         Long publishedDate = null;
         String publishedDateString = node.get(PUBLISHEDDATE).asText();
-        SimpleDateFormat sdf = publishedDateString.length() == 4 ? new SimpleDateFormat(YEARFORMAT): new SimpleDateFormat(DATEFORMAT);
+        SimpleDateFormat sdf = publishedDateString.length() == 4 ? new SimpleDateFormat("yyyy"): new SimpleDateFormat("yyyy-MM-dd");
         try {
             publishedDate = sdf.parse(publishedDateString).getTime();
         } catch (ParseException e) {

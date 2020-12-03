@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Book {
@@ -249,4 +250,29 @@ public class Book {
     public Long getAddedTime() {return addedTime;}
 
     public void setAddedTime(long addedTime) {this.addedTime = addedTime;}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return pageCount == book.pageCount &&
+                Objects.equals(isbn, book.isbn) &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(subtitle, book.subtitle) &&
+                Objects.equals(publisher, book.publisher) &&
+                Objects.equals(publishedDate, book.publishedDate) &&
+                Objects.equals(description, book.description) &&
+                Objects.equals(thumbnailUrl, book.thumbnailUrl) &&
+                Objects.equals(language, book.language) &&
+                Objects.equals(previewLink, book.previewLink) &&
+                Objects.equals(averageRating, book.averageRating) &&
+                Objects.equals(authors, book.authors) &&
+                Objects.equals(categories, book.categories);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isbn, title, subtitle, publisher, publishedDate, description, pageCount, thumbnailUrl, language, previewLink, averageRating, authors, categories, addedTime);
+    }
 }

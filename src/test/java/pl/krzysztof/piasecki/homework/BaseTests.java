@@ -1,6 +1,7 @@
 package pl.krzysztof.piasecki.homework;
 
 import org.junit.Before;
+import org.junit.Test;
 import pl.krzysztof.piasecki.homework.model.Book;
 import pl.krzysztof.piasecki.homework.utils.ParamInitializer;
 
@@ -21,12 +22,14 @@ public class BaseTests {
         ClassLoader classLoader = getClass().getClassLoader();
         return new File(classLoader.getResource(ParamInitializer.getInstance().getParam("datasource")).getFile());
     }
-    public Book getTestData() {
+
+    public Book getSingleBookMockData(){
         List<String> authors = new ArrayList<>();
         List<String> categories = new ArrayList<>();
+
         authors.add("Clifford Geertz");
         categories.add("Religion");
-        Book bookTestData = new Book.Builder()
+        return new Book.Builder()
                 .withIsbn("9780226285108")
                 .withTitle("The Religion of Java")
                 .withPublisher("University of Chicago Press")
@@ -40,6 +43,10 @@ public class BaseTests {
                 .withAuthors(authors)
                 .withCategories(categories)
                 .build();
-        return bookTestData;
+    }
+    public List<Book> getMockDataForReligionCategory(){
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(getSingleBookMockData());
+        return bookList;
     }
 }

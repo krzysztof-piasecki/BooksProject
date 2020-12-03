@@ -1,0 +1,14 @@
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\reader\impl\APIJsonReader.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\controller\BooksController.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\serializator\BookDeserializer.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\utils\ParamInitializer.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\reader\impl\JsonFileReader.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\HomeworkApplication.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\model\AuthorRating.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\service\BookService.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\dao\BookDao.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\cache\BookCacheImpl.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\serializator\BookSerializeObject.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\reader\JsonReader.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\cache\BookComparator.java
+D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\model\Book.java

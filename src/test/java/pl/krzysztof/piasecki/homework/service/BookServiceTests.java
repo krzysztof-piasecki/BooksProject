@@ -1,64 +1,76 @@
 package pl.krzysztof.piasecki.homework.service;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.internal.matchers.apachecommons.ReflectionEquals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import pl.krzysztof.piasecki.homework.BaseTests;
-import pl.krzysztof.piasecki.homework.dao.BookDao;
 import pl.krzysztof.piasecki.homework.model.AuthorRating;
 import pl.krzysztof.piasecki.homework.model.Book;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class BookServiceTests extends BaseTests {
-    @Autowired
-    private BookDao bookDao;
 
+    @Autowired
+    BookService bookService;
     @Test
     public void getBookByIsbn() {
-        List<Book> bookList = bookDao.getAllBooks();
+        //given
         String id = "9780226285108";
-        Optional<Book> book = bookList.stream().filter(e -> id.equals(e.getIsbn())).findFirst();
-        assertTrue(new ReflectionEquals(getTestData()).matches(book.get()));
+        Book actual = bookService.getBookByIsbn(id);
+        Book expected = getSingleBookMockData();
+
+        //then
+        assertEquals(expected, actual);
     }
 
     @Test
     public void getBookByCategory() {
-        List<Book> bookList = bookDao.getAllBooks();
-        String category = "Computers";
-        List<Book> booksByCategory = bookList.stream().filter(e -> e.getCategories().contains(category)).collect(Collectors.toList());
-        assertEquals(22, booksByCategory.size());
+        //given
+        String category = "Religion";
+        List<Book> expectedBooks = bookService.getBookByCategory(category);
+        List<Book> actualBooks = getMockDataForReligionCategory();
+
+        //then
+        assertTrue(expectedBooks.size() == actualBooks.size());
+        assertEquals(expectedBooks, actualBooks);
     }
 
     @Test
-    public void getAuthorsAndAverageRatings() {
-        List<Book> bookList = bookDao.getAllBooks();
-        Map<String, List<Double>> authorsAllBookRatings = new HashMap<>();
-        for (Book book : bookList) {
-            for (String str : book.getAuthors()) {
-                authorsAllBookRatings.computeIfAbsent(str, k -> new ArrayList<>()).add(book.getAverageRating());
-            }
+    public void getAuthorsAverageRatings() {
+        //given
+        List<AuthorRating> authorRatingsList = bookService.getAuthorsAverageRatings();
+
+        //then
+        assertTrue(!authorRatingsList.stream().anyMatch(e ->  e.getAverageRating().equals(null)));
+        assertEquals(15, authorRatingsList.size());
         }
-        List<AuthorRating> authorRatings = new ArrayList<>();
-        for (Map.Entry<String, List<Double>> entryRatings : authorsAllBookRatings.entrySet()) {
-            authorRatings.add(new AuthorRating(entryRatings.getKey(), computeAverageRating(entryRatings.getValue())));
-        }
-        System.out.println(authorRatings);
+
+    @Test
+    public void getBooksByPageNumber() {
+        //given
+        int maxPages = 391;
+        Book book = bookService.getBookByPageNumber(maxPages);
+
+        //then
+        assertEquals(getSingleBookMockData(), book);
     }
 
-    private Double computeAverageRating(List<Double> ratings) {
-        Double ratingSum = null;
-        for (Double rating : ratings) {
-            if (null != rating) {
-                ratingSum = ratingSum == null ? rating : ratingSum + rating;
-            }
-        }
-        return ratingSum == null ? null : ratingSum / ratings.size();
+    @Test
+    public void getBooksByReadingSkills(){
+        //given
+        int numberOfPagesPerHour = 20;
+        int averageNumberOfHoursPerDay = 2;
+        List<Book> bookList = bookService.getBooksByReadingSkills(numberOfPagesPerHour, averageNumberOfHoursPerDay);
+
+        //then
+        assertEquals(3, bookList.size());
     }
+
 }

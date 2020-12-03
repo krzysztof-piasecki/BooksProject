@@ -18,7 +18,6 @@ import java.util.List;
 public class BookDao {
     @Autowired
     JsonReader jsonReader;
-    JSONParser parser = new JSONParser();
 
     public List<Book> getAllBooks() {
         List<Book> bookList = new ArrayList<>();

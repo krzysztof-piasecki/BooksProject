@@ -1,6 +1,5 @@
 package pl.krzysztof.piasecki.homework.utils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,10 +32,6 @@ public class ParamInitializer {
             value.append(brokenValues[i]);
         }
         return value.toString();
-    }
-    public File readBookFile() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        return new File(classLoader.getResource(ParamInitializer.getInstance().getParam("datasource")).getFile());
     }
 
     public String getParam(String key) {
