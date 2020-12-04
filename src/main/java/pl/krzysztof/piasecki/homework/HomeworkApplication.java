@@ -1,6 +1,5 @@
 package pl.krzysztof.piasecki.homework;
 
-import org.apache.commons.validator.routines.UrlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -35,10 +34,10 @@ public class HomeworkApplication {
         if(path == null) {
             path = defaultPath;
         }
-        if(UrlValidator.getInstance().isValid(path)) {
-            return new APIJsonReader(path);
+        if(path.equals("googleApi")) {
+            return new APIJsonReader();
         }
-        if(Arrays.stream(env.getActiveProfiles()).filter(e -> "test".equals(e)).findFirst().isPresent()) {
+        if(Arrays.stream(env.getActiveProfiles()).anyMatch(e -> "test".equals(e))) {
             return new JsonFileReader("misc/books.json");
         }
         return new JsonFileReader(path);

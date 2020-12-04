@@ -3,7 +3,6 @@ package pl.krzysztof.piasecki.homework.dao;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import pl.krzysztof.piasecki.homework.model.Book;

@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: pl.krzysztof.piasecki.homework.api.BookEndpointsTests
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.356 s - in pl.krzysztof.piasecki.homework.api.BookEndpointsTests
+Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.389 s - in pl.krzysztof.piasecki.homework.api.BookEndpointsTests
