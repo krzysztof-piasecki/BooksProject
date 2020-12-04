@@ -17,7 +17,7 @@ public class JsonFileReader implements JsonReader {
     @Override
     public JSONObject getData() {
         InputStream bookStream = null;
-        if (!"misc/book.json" .equals(path)) {
+        if (!"misc/books.json" .equals(path)) {
             try {
                 bookStream = new FileInputStream(path);
             } catch (FileNotFoundException e) {

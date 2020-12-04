@@ -1,6 +1,5 @@
 D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\reader\impl\APIJsonReader.java
 D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\controller\BooksController.java
-D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\exception\BookNotFoundException.java
 D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\serializator\BookDeserializer.java
 D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\utils\ParamInitializer.java
 D:\Studia\Java\Books\BooksProject\src\main\java\pl\krzysztof\piasecki\homework\reader\impl\JsonFileReader.java
