@@ -11,7 +11,6 @@ import pl.krzysztof.piasecki.homework.service.BookService;
 import java.util.List;
 
 @RestController
-
 public class BooksController {
     @Autowired
     BookService bookService;
@@ -21,23 +20,23 @@ public class BooksController {
         return bookService.getBookByIsbn(id);
     }
 
-    @GetMapping(path = "category:{categories}")
-    public List<Book> getBooksByCategory(@PathVariable String categories){
-        return bookService.getBookByCategory(categories);
+    @GetMapping(path = "category:{category}")
+    public List<Book> getBooksByCategory(@PathVariable String category){
+        return bookService.getBookByCategory(category);
     }
 
-    @GetMapping(path = "/authors_rating")
+    @GetMapping(path = "authors_rating")
     public List<AuthorRating> getBooksByAuthorRatings(){
         return bookService.getAuthorsAverageRatings();
     }
 
     @GetMapping(path = "pages:{pages}")
-    public Book getBookByPages(@PathVariable int pages){
+    public Book getBookByPages(@PathVariable Integer pages){
         return bookService.getBookByPageNumber(pages);
     }
 
     @GetMapping(path = "best/pace:{pages}/daily:{hours}")
-    public List<Book> getBookByRating(@PathVariable int pages, @PathVariable int hours){
+    public List<Book> getBooksByReadingSkills(@PathVariable Integer pages, @PathVariable Integer hours){
         return bookService.getBooksByReadingSkills(pages,hours);
     }
 }

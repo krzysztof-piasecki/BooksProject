@@ -18,7 +18,7 @@ public class Book {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long publishedDate;
     private String description;
-    private int pageCount;
+    private Integer pageCount;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String thumbnailUrl;
     private String language;
@@ -36,7 +36,7 @@ public class Book {
         private String publisher;
         private Long publishedDate;
         private String description;
-        private int pageCount;
+        private Integer pageCount;
         private String thumbnailUrl;
         private String language;
         private String previewLink;
@@ -80,7 +80,7 @@ public class Book {
             return this;
         }
 
-        public Builder withPageCount(int pageCount) {
+        public Builder withPageCount(Integer pageCount) {
             this.pageCount = pageCount;
 
             return this;
@@ -167,7 +167,7 @@ public class Book {
         return description;
     }
 
-    public int getPageCount() {
+    public Integer getPageCount() {
         return pageCount;
     }
 
@@ -219,7 +219,7 @@ public class Book {
         this.description = description;
     }
 
-    public void setPageCount(int pageCount) {
+    public void setPageCount(Integer pageCount) {
         this.pageCount = pageCount;
     }
 
@@ -256,7 +256,7 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return pageCount == book.pageCount &&
+        return  Objects.equals(pageCount, book.pageCount) &&
                 Objects.equals(isbn, book.isbn) &&
                 Objects.equals(title, book.title) &&
                 Objects.equals(subtitle, book.subtitle) &&

@@ -1,0 +1,7 @@
+pl\krzysztof\piasecki\homework\BaseTests.class
+pl\krzysztof\piasecki\homework\service\BookServiceTests.class
+pl\krzysztof\piasecki\homework\HomeworkApplicationTests.class
+pl\krzysztof\piasecki\homework\api\BookEndpointsTests.class
+pl\krzysztof\piasecki\homework\utils\FileReadTests.class
+pl\krzysztof\piasecki\homework\api\BookEndpointsTests$1.class
+pl\krzysztof\piasecki\homework\dao\BookDaoTests.class

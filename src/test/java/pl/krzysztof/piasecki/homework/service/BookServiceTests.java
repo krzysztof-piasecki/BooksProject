@@ -10,8 +10,7 @@ import pl.krzysztof.piasecki.homework.model.Book;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -22,9 +21,20 @@ public class BookServiceTests extends BaseTests {
     @Test
     public void getBookByIsbn() {
         //given
-        String id = "9780226285108";
-        Book actual = bookService.getBookByIsbn(id);
-        Book expected = getSingleBookMockData();
+        String correctIsbn = "9780226285108";
+        Book actual = bookService.getBookByIsbn(correctIsbn);
+        Book expected = getSingleBookMockDataWithCorrectIsbn();
+
+        //then
+        assertEquals(expected, actual);
+
+        //given
+        String idIsbn = "y6QNAAAAQAAJ";
+        expected = getSingleBookMockDataWithIdIsbn();
+
+        assertNotEquals(expected, actual);
+
+        actual = bookService.getBookByIsbn(idIsbn);
 
         //then
         assertEquals(expected, actual);
@@ -39,6 +49,7 @@ public class BookServiceTests extends BaseTests {
 
         //then
         assertTrue(expectedBooks.size() == actualBooks.size());
+        assertFalse(expectedBooks.size() == actualBooks.size() + 1);
         assertEquals(expectedBooks, actualBooks);
     }
 
@@ -48,7 +59,7 @@ public class BookServiceTests extends BaseTests {
         List<AuthorRating> authorRatingsList = bookService.getAuthorsAverageRatings();
 
         //then
-        assertTrue(!authorRatingsList.stream().anyMatch(e ->  e.getAverageRating().equals(null)));
+        assertEquals(getMockDataForAuthorsRatings(), authorRatingsList);
         assertEquals(15, authorRatingsList.size());
         }
 
@@ -59,7 +70,7 @@ public class BookServiceTests extends BaseTests {
         Book book = bookService.getBookByPageNumber(maxPages);
 
         //then
-        assertEquals(getSingleBookMockData(), book);
+        assertEquals(getSingleBookMockDataWithCorrectIsbn(), book);
     }
 
     @Test
@@ -70,7 +81,7 @@ public class BookServiceTests extends BaseTests {
         List<Book> bookList = bookService.getBooksByReadingSkills(numberOfPagesPerHour, averageNumberOfHoursPerDay);
 
         //then
-        assertEquals(3, bookList.size());
+        assertEquals(2, bookList.size());
     }
 
 }

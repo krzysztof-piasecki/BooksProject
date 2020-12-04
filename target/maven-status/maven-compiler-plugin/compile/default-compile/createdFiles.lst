@@ -1,0 +1,16 @@
+pl\krzysztof\piasecki\homework\HomeworkApplication.class
+pl\krzysztof\piasecki\homework\model\Book.class
+pl\krzysztof\piasecki\homework\cache\BookComparator.class
+pl\krzysztof\piasecki\homework\reader\impl\JsonFileReader.class
+pl\krzysztof\piasecki\homework\dao\BookDao.class
+pl\krzysztof\piasecki\homework\exception\BookNotFoundException.class
+pl\krzysztof\piasecki\homework\reader\impl\APIJsonReader.class
+pl\krzysztof\piasecki\homework\cache\BookCacheImpl.class
+pl\krzysztof\piasecki\homework\serializator\BookSerializeObject.class
+pl\krzysztof\piasecki\homework\service\BookService.class
+pl\krzysztof\piasecki\homework\model\Book$Builder.class
+pl\krzysztof\piasecki\homework\serializator\BookDeserializer.class
+pl\krzysztof\piasecki\homework\utils\ParamInitializer.class
+pl\krzysztof\piasecki\homework\model\AuthorRating.class
+pl\krzysztof\piasecki\homework\reader\JsonReader.class
+pl\krzysztof\piasecki\homework\controller\BooksController.class

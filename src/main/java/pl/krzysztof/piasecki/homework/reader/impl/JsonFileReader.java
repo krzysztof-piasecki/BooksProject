@@ -5,7 +5,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import pl.krzysztof.piasecki.homework.reader.JsonReader;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class JsonFileReader implements JsonReader {
     private String path;
@@ -15,16 +17,18 @@ public class JsonFileReader implements JsonReader {
     @Override
     public JSONObject getData() {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(path).getFile());
+        InputStream bookStream = classLoader.getResourceAsStream(path);
+
         JSONParser parser = new JSONParser();
-        Object obj = null;
+        JSONObject jsonObject = new JSONObject();
         try {
-            obj = parser.parse(new FileReader(file));
+            jsonObject = (JSONObject)parser.parse(
+                    new InputStreamReader(bookStream, "UTF-8"));
 
         }catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-        return (JSONObject) obj;
+        return jsonObject;
 
     }
 }

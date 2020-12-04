@@ -27,20 +27,20 @@ public class BookDeserializer extends StdDeserializer<Book> {
     private static final String ID = "id";
 
 
-    public BookDeserializer()
-    {
+    public BookDeserializer() {
         super(Book.class);
     }
+
     @Override
     public Book deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         JsonNode treeNode = jsonParser.readValueAsTree();
         JsonNode volumeInfoNode = treeNode.get(VOLUMEINFO);
         Book book = new ObjectMapper().readValue(volumeInfoNode.toString(), Book.class);
-        if(volumeInfoNode.hasNonNull(INDUSTRYIDENTIFIERS))
+        if (volumeInfoNode.hasNonNull(INDUSTRYIDENTIFIERS))
             book.setIsbn(parseIsbn(treeNode));
-        if(volumeInfoNode.hasNonNull(PUBLISHEDDATE))
+        if (volumeInfoNode.hasNonNull(PUBLISHEDDATE))
             book.setPublishedDate(parseDateToLong(volumeInfoNode));
-        if(volumeInfoNode.hasNonNull(IMAGELINKS) && volumeInfoNode.get(IMAGELINKS).hasNonNull(THUMBNAIL)){
+        if (volumeInfoNode.hasNonNull(IMAGELINKS) && volumeInfoNode.get(IMAGELINKS).hasNonNull(THUMBNAIL)) {
             book.setThumbnailUrl(volumeInfoNode.get(IMAGELINKS).get(THUMBNAIL).asText());
         }
         return book;
@@ -50,16 +50,23 @@ public class BookDeserializer extends StdDeserializer<Book> {
         String identifier = node.get(ID).asText();
         List<JsonNode> list = node.findParents(IDENTIFIER);
         Optional<JsonNode> isbn13 = list.stream().filter(e -> e.get(TYPE).asText().endsWith(ISBNTYPENUMBER)).findFirst();
-        if(isbn13.isPresent() && isbn13.get().has(IDENTIFIER)) {
+        if (isbn13.isPresent() && isbn13.get().has(IDENTIFIER)) {
             identifier = isbn13.get().get(IDENTIFIER).asText();
         }
-        return identifier ;
+        return identifier;
     }
 
     private Long parseDateToLong(JsonNode node) {
         Long publishedDate = null;
         String publishedDateString = node.get(PUBLISHEDDATE).asText();
-        SimpleDateFormat sdf = publishedDateString.length() == 4 ? new SimpleDateFormat("yyyy"): new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf;
+        if (publishedDateString.length() == 4) {
+            sdf = new SimpleDateFormat("yyyy");
+        } else if (publishedDateString.length() == 7) {
+            sdf = new SimpleDateFormat("yyyy-MM");
+        } else {
+            sdf = new SimpleDateFormat("yyyy-MM-dd");
+        }
         try {
             publishedDate = sdf.parse(publishedDateString).getTime();
         } catch (ParseException e) {

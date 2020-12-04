@@ -50,6 +50,8 @@ public class BookService {
                 authorRatings.add(new AuthorRating(entryRatings.getKey(), authorsAverageRating));
             }
         }
+        //Sorting Authors by rating
+        authorRatings.sort(Comparator.comparing(AuthorRating::getAverageRating).reversed());
         return authorRatings;
     }
 
@@ -63,22 +65,22 @@ public class BookService {
         return ratingSum == null ? null : ratingSum / ratings.size();
     }
 
-    public Book getBookByPageNumber(int pageNumber) {
+    public Book getBookByPageNumber(Integer pageNumber) {
         List<Book> bookList = bookDao.getAllBooks();
-        Optional<Book> book = bookList.stream().filter(e -> e.getPageCount() > pageNumber).findFirst();
+        Optional<Book> book = bookList.stream().filter(e -> e.getPageCount() != null && e.getPageCount()> pageNumber).findFirst();
         return book.orElse(null);
     }
 
-    public List<Book> getBooksByReadingSkills(int numberOfPagesPerHour, int averageNumberOfHoursPerDay) {
+    public List<Book> getBooksByReadingSkills(Integer numberOfPagesPerHour, Integer averageNumberOfHoursPerDay) {
         List<Book> bookList = bookDao.getAllBooks();
         List<Book> booksByReadingSkillsWithHighestRatings = new ArrayList<>();
-        int averagePagesPerMonth = numberOfPagesPerHour * averageNumberOfHoursPerDay * 30;
+        Integer averagePagesPerMonth = numberOfPagesPerHour * averageNumberOfHoursPerDay * 30;
 
-        bookList = bookList.stream().filter(e -> e.getAverageRating() != null).collect(Collectors.toList());
+        bookList = bookList.stream().filter(e -> e.getAverageRating() != null).filter(e -> e.getPageCount() != null).collect(Collectors.toList());
         bookList.sort(Comparator.comparing(Book::getAverageRating).reversed());
 
-        int minPages = bookList.get(bookList.size() - 1).getPageCount();
-        int numberOfPages = 0;
+        Integer minPages = bookList.get(bookList.size() - 1).getPageCount();
+        Integer numberOfPages = 0;
 
         for (Book book : bookList) {
             if (averagePagesPerMonth - numberOfPages < minPages) {
