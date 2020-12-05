@@ -1,7 +1,7 @@
 ### Short description of the application
 
 #### BookApplications is a small project that retrives information from either googleBooksApi or the json file (which is mapped like json from GoogleBookApi) and return the jsonFile. The application has 5 endpoints, which are :
-### Google Books API can return maximum of 40 items with my own API key. Without API key, Google Books API returns only 10 items. It retrives 40 books which are published by Penguin
+#### Google Books API can return maximum of 40 items with my own API key. Without API key, Google Books API returns only 10 items. It retrives 40 books which are published by Penguin
 
 ##### -isbn:{id} - retrive information about book by given isbn id
 ##### -getBooksByCategory- retrive list of books in given category
@@ -10,7 +10,7 @@
 ##### -getBooksByReadingSkills - retrive the list of books with highest average rating given the average pages per hour pace and daily time spent on reading
 ##### -getRecentlyViewedBooks - retrive the list of recently viewed books through isbn search 
 
-### The app also contains unit and integration tests
+#### The app also contains unit and integration tests
 
 ### Frameworks
 
