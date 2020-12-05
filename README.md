@@ -3,12 +3,12 @@
 #### BookApplications is a small project that retrives information from either googleBooksApi or the json file (which is mapped like json from GoogleBookApi) and return the endpoints which are mapped to json file. The application has 5 endpoints, which are :
 #### Google Books API can return maximum of 40 items with my own API key. Without API key, Google Books API returns only 10 items. It retrives 40 books which are published by Penguin
 
-##### -isbn:{id} - retrive information about book by given isbn id
-##### -getBooksByCategory- retrive list of books in given category
-##### -getBooksByAuthorRatings- retrive information about Authors and their average books rating 
-##### -getBookByPages- retrive information about book which is no longer than given pages
-##### -getBooksByReadingSkills - retrive the list of books with highest average rating given the average pages per hour pace and daily time spent on reading
-##### -getRecentlyViewedBooks - retrive the list of recently viewed books through isbn search 
+##### -{serverURI}/isbn:{id} - retrive information about book by given isbn id
+##### -{serverURI}/category:{category} - retrive list of books in given category
+##### -{serverURI}/authors-rating - retrive information about Authors and their average books rating 
+##### -{serverURI}/pages:{maxPages} - retrive information about first book which is longer than given pages
+##### -{serverURI}/best-pace:{pace}/daily:{daily} - retrive the list of books with highest average rating which can be read in a month. The user have to specify the average pages per hour pace and daily time spent on reading.
+##### -{serverURI}/recently-viewed-books - retrive the list of recently viewed books which were search by isbn
 
 #### The app also contains unit and integration tests
 
@@ -36,4 +36,4 @@
 ##### java -jar target/homework-2.4.0.jar -Ddatasource=googleApi
 
 ##### // TO get books from given json file (has to be mapped like Google Books Api json file)
-##### java -jar target/homework-2.4.0.jar -Ddatasource=googleApi
+##### java -jar target/homework-2.4.0.jar -Ddatasource={custom path to json file, has to be absolut}
