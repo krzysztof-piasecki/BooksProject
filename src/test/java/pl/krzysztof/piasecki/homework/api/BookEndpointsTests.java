@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import pl.krzysztof.piasecki.homework.BaseTests;
 import pl.krzysztof.piasecki.homework.service.BookService;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,7 +53,6 @@ public class BookEndpointsTests extends BaseTests {
 
         //then
 
-        System.out.println(when().get(path, id).getBody().prettyPeek().toString());
         when().
                 get(path, id).
                 then().
@@ -74,7 +74,7 @@ public class BookEndpointsTests extends BaseTests {
     public void getAuthorsRatings() {
         port = randomServerPort;
         when().
-                get("/authors_rating").
+                get("/authors-rating").
                 then().
                 statusCode(200).
                 body("size()", is(15));
@@ -104,7 +104,7 @@ public class BookEndpointsTests extends BaseTests {
         given().
                 pathParams(params).
         when().
-                get("/best/pace:{pace}/daily:{daily}").
+                get("/best-pace:{pace}/daily:{daily}").
                 then().
                 statusCode(200).
                 body("size()", is(2));
@@ -119,5 +119,19 @@ public class BookEndpointsTests extends BaseTests {
                 then().
                 statusCode(200).
                 body("size()", is(1));
+    }
+
+    @Test
+    public void getRecentlyViewedBooks() {
+        port = randomServerPort;
+        String isbn = "9780226285108";
+        get("/isbn:{id}",isbn).
+                then().
+                statusCode(200);
+        when().
+                get("/recently-viewed-books").
+                then().
+                statusCode(200).
+                body("isbn", hasItem(isbn));
     }
 }

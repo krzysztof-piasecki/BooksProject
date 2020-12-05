@@ -14,11 +14,13 @@ import java.util.List;
 
 @RestController
 public class BooksController {
+    private static final String BOOKSNOTFOUND = "Books not found";
+    private static final String BOOKNOTFOUND = "Book not found";
     @Autowired
     BookService bookService;
 
     /**
-     * To retrive data from specific ISBN the path is "isbn:{id}"
+     * To retrive data from specific ISBN the path is "/isbn:{id}"
      * @param id
      * @return
      */
@@ -27,14 +29,14 @@ public class BooksController {
         Book book = bookService.getBookByIsbn(id);
         if (book == null){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Book not found"
+                    HttpStatus.NOT_FOUND, BOOKNOTFOUND
             );
         }
         return book;
     }
 
     /**
-     * To retrive the list of books by category the path is "category:{category}"
+     * To retrive the list of books by category the path is "/category:{category}"
      * @param category
      * @return
      */
@@ -44,29 +46,29 @@ public class BooksController {
         List<Book> booksByCategory = bookService.getBookByCategory(category);
         if (booksByCategory.isEmpty()){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Books not found"
+                    HttpStatus.NOT_FOUND, BOOKSNOTFOUND
             );
         }
         return booksByCategory;
     }
 
     /**
-     * To retrive authors by average books written rating the path is "authors_rating"
+     * To retrive authors by average books written rating the the path in url is "/rating"
      * @return
      */
-    @GetMapping(path = "authors_rating")
+    @GetMapping(path = "authors-rating")
     public List<AuthorRating> getBooksByAuthorRatings() {
         List<AuthorRating> bookList = bookService.getAuthorsAverageRatings();
         if (bookList.isEmpty()){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Books not found"
+                    HttpStatus.NOT_FOUND, BOOKSNOTFOUND
             );
         }
         return bookList;
     }
 
     /**
-     * To retrive book for the maximum pages the path is "pages:{pages}"
+     * To retrive book for the maximum pages the the path in url is "/pages:{pages}"
      * @param pages
      * @return
      */
@@ -75,7 +77,7 @@ public class BooksController {
         Book book = bookService.getBookByPageNumber(pages);
         if (book == null){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Book not found"
+                    HttpStatus.NOT_FOUND, BOOKNOTFOUND
             );
         }
         return book;
@@ -83,17 +85,32 @@ public class BooksController {
 
     /**
      * To retrive data for list of book by the user reading speed and daily hours for reading
-     * the path is best/pace:{pages}/daily:{hours}
-     * @param pages
-     * @param hours
+     * the path in url is "/best-pace:{pace}/daily:{daily}"
+     * @param pace
+     * @param daily
      * @return
      */
-    @GetMapping(path = "best/pace:{pages}/daily:{hours}")
-    public List<Book> getBooksByReadingSkills(@PathVariable Integer pages, @PathVariable Integer hours) {
-        List<Book> bookList = bookService.getBooksByReadingSkills(pages, hours);
+    @GetMapping(path = "best-pace:{pace}/daily:{daily}")
+    public List<Book> getBooksByReadingSkills(@PathVariable Integer pace, @PathVariable Integer daily) {
+        List<Book> bookList = bookService.getBooksByReadingSkills(pace, daily);
         if (bookList.isEmpty()){
             throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Books not found"
+                    HttpStatus.NOT_FOUND, BOOKSNOTFOUND
+            );
+        }
+        return bookList;
+    }
+    /**
+     * To retrive data for the recently viewed books
+     * the path in url is "/recently-viewed-books"
+     * @return
+     */
+    @GetMapping(path = "recently-viewed-books")
+    public List<Book> getRecentlyViewedBooks() {
+        List<Book> bookList = bookService.getRecentlyViewedBooks();
+        if (bookList.isEmpty()){
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "There isn't any books in cache"
             );
         }
         return bookList;

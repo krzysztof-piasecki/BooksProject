@@ -2,8 +2,10 @@ package pl.krzysztof.piasecki.homework.cache;
 
 import pl.krzysztof.piasecki.homework.model.Book;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +36,15 @@ public class BookCacheImpl {
         return cacheMap.get(isbn);
     }
 
+    public static synchronized List<Book> getAll(){
+        List<Book> bookList = new ArrayList<>();
+        if(!cacheMap.isEmpty()){
+            for (Book book : cacheMap.values()){
+                bookList.add(book);
+            }
+        }
+        return bookList;
+    }
     static {
         new Thread(() -> {
             try {

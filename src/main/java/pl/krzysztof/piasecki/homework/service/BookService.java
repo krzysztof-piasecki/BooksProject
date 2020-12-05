@@ -29,6 +29,11 @@ public class BookService {
         }
     }
 
+    public List<Book> getRecentlyViewedBooks() {
+        List<Book> bookList = BookCacheImpl.getAll();
+        return bookList;
+    }
+
     public List<Book> getBookByCategory(String category) {
         List<Book> bookList = bookDao.getAllBooks();
         return bookList.stream().filter(e -> e.getCategories().contains(category)).collect(Collectors.toList());
@@ -67,7 +72,9 @@ public class BookService {
 
     public Book getBookByPageNumber(Integer pageNumber) {
         List<Book> bookList = bookDao.getAllBooks();
-        Optional<Book> book = bookList.stream().filter(e -> e.getPageCount() != null && e.getPageCount()> pageNumber).findFirst();
+        bookList = bookList.stream().filter(e -> e.getPageCount() != null && e.getPageCount()> pageNumber).collect(Collectors.toList());
+        bookList.sort(Comparator.comparing(Book::getPageCount));
+        Optional<Book> book = bookList.stream().findFirst();
         return book.orElse(null);
     }
 
