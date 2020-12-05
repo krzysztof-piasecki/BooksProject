@@ -1,6 +1,6 @@
 ### Short description of the application
 
-#### BookApplications is a small project that retrives information from either googleBooksApi or the json file (which is mapped like json from GoogleBookApi) and return the jsonFile. The application has 5 endpoints, which are :
+#### BookApplications is a small project that retrives information from either googleBooksApi or the json file (which is mapped like json from GoogleBookApi) and return the endpoints which are mapped to json file. The application has 5 endpoints, which are :
 #### Google Books API can return maximum of 40 items with my own API key. Without API key, Google Books API returns only 10 items. It retrives 40 books which are published by Penguin
 
 ##### -isbn:{id} - retrive information about book by given isbn id
@@ -35,3 +35,5 @@
 ##### // To get books from Google Books Api:  
 ##### java -jar target/homework-2.4.0.jar -Ddatasource=googleApi
 
+##### // TO get books from given json file (has to be mapped like Google Books Api json file)
+##### java -jar target/homework-2.4.0.jar -Ddatasource=googleApi
