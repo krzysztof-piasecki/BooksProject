@@ -38,5 +38,5 @@ When using Google Books API as data resource, I was limited to following constra
 // To get books from Google Books Api:  
 * java -jar target/homework-2.4.0.jar -Ddatasource=googleApi
 
-// TO get books from given json file (has to be mapped like Google Books Api json file)
+// To get books from given json file (has to be mapped like Google Books Api json file)
 * java -jar target/homework-2.4.0.jar -Ddatasource={custom path to json file, has to be absolut}
