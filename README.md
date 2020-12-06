@@ -11,7 +11,7 @@ BookApplications is a small project that retrives information from either google
 
 When using Google Books API as data resource, I was limited to following constraints:
 * Google Books API can return maximum of 40 items with my own API key or 10 without it.
-* API doesn't allow to retrive non parametrized query thus I had to create my own criteria which are based on publisher (Penguin).
+* API doesn't allow to retrive non parameterized query thus I had to create my own criteria which are based on publisher (Penguin).
 
 ### Frameworks
 
